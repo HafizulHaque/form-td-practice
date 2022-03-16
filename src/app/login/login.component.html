@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="card w-50 m-auto">
+    <div class="card-body">
+      
+      <!-- //form -->
+      <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+        <!-- form title  -->
+        <h4 class="text-center">Subscription Form</h4>
+
+        <!-- email input  -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input 
+          type="email" 
+          id="email" 
+          class="form-control" 
+          [ngClass]="{
+            'is-invalid': emailInput.dirty && !emailInput.valid, 
+            'is-valid': emailInput.valid}"
+          email 
+          required
+          ngModel
+          name="email"
+          #emailInput="ngModel">
+        </div>
+        <div 
+          *ngIf="emailInput.touched && !emailInput.valid" 
+          class="text-danger">
+          <small>Input a valid email. e.g: user@domain.com</small>
+        </div>
+        
+        <!-- select input  -->
+        <div class="form-group mt-4">
+          <label 
+          for="subscriptionType" 
+          class="form-label">Subscription Type</label>
+          <select 
+          class="form-select" 
+          id="subscriptionType"
+          [ngModel]="defaultSubscription"
+          required
+          name="subscription">
+            <option 
+              *ngFor="let sType of subscriptionTypes" 
+              [value]="sType">{{sType}}
+            </option>
+          </select>
+        </div>
+
+        <!-- password input  -->
+        <div class="form-group mt-4">
+          <label for="password" class="form-label">Password</label>
+          <input 
+            type="password" 
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': passInput.dirty && !passValid(),
+              'is-valid': passInput.valid
+            }"
+            id="password" 
+            [(ngModel)]="password"
+            required
+            name="password"
+            #passInput="ngModel">
+        </div>
+        <div 
+          *ngIf="passInput.touched && !passInput.valid"
+          class="text-danger">
+          <small>Password must not be empty & should have at least 5 characters</small>
+        </div>
+        <!-- submit button  -->
+        <div class="d-grid mt-4">
+          <button 
+            type="submit" 
+            class="btn btn-success"
+            [disabled]="!form.valid || !passValid()">
+            Submit
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
